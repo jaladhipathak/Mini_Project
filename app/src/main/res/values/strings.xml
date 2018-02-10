@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Mapapp</string>
+    <string name="signin">Sign In</string>
+    <string name="signup">Not yet registered? Sign Up</string>
+</resources>
