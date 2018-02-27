@@ -3,4 +3,7 @@
     <string name="signin">Sign In</string>
     <string name="signup">Not yet registered? Sign Up</string>
     <string name="welcome">Welcome</string>
+    <string name="title_activity_registration">Registration</string>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyCuBNM8B0PSBQ-9iREWbX26ikDjW2QKZmI</string>
+    <string name="title_activity_maps2">Map</string>
 </resources>

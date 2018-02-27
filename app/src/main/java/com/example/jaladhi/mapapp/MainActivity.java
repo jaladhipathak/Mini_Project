@@ -13,6 +13,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        YourPreference yourPrefrence = YourPreference.getInstance(MainActivity.this);
+
     }
     public void myfun(View view){
         if(view.getId()==R.id.login){
@@ -21,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
             String uname=edit.getText().toString();
             intent.putExtra("usrname",uname);
             startActivity(intent);
+
         }
     }
 
