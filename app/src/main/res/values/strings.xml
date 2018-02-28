@@ -6,4 +6,12 @@
     <string name="title_activity_registration">Registration</string>
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyCuBNM8B0PSBQ-9iREWbX26ikDjW2QKZmI</string>
     <string name="title_activity_maps2">Map</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="newpost">New Post</string>
+    <string name="seealpost">See All my Post</string>
+    <string name="Seeylove">See your Lovables</string>
+    <string name="changecity">Change City</string>
+    <string name="refresh">Refresh</string>
+    <string name="logout">Log out</string>
 </resources>

@@ -44,7 +44,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 mMap.clear();
                 LatLng x= new LatLng(CurrentLatitude,CurrentLongitude);
                 mMap.addCircle(new CircleOptions().center(x).radius(30.0).fillColor(Color.BLUE).strokeColor(Color.BLUE));
-                //mMap.addMarker(new MarkerOptions().position(x).title("Marker"));
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(x));
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(x,15));
             }
