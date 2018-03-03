@@ -30,7 +30,8 @@
             android:id="@+id/toolbar1"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary"/>
+            android:background="@color/colorPrimary"
+            app:titleTextColor="#ffffff"/>
 
     </FrameLayout>
 
