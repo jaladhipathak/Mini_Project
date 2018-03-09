@@ -14,4 +14,6 @@
     <string name="changecity">Change City</string>
     <string name="refresh">Refresh</string>
     <string name="logout">Log out</string>
+    <string name="registertitle">Registration</string>
+    <string name="notregistred">Not Registred yet? Sign Up</string>
 </resources>

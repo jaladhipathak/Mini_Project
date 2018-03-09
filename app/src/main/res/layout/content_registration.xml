@@ -15,14 +15,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/registertitle"
+            android:textSize="45sp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/colorPrimary"/>
         <EditText
             android:id="@+id/regName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="30dp"
             android:layout_gravity="center"
             android:ems="10"
             android:hint="Name"
@@ -32,8 +37,6 @@
             android:id="@+id/regEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/regName"
-            android:layout_below="@+id/regName"
             android:layout_gravity="center"
             android:layout_marginTop="22dp"
             android:ems="10"
@@ -44,9 +47,7 @@
             android:id="@+id/regMobile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/regEmail"
             android:layout_gravity="center"
-            android:layout_centerHorizontal="true"
             android:layout_marginTop="19dp"
             android:ems="10"
             android:hint="Mobile no."
@@ -57,8 +58,6 @@
             android:id="@+id/regPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/regMobile"
-            android:layout_below="@+id/regMobile"
             android:layout_gravity="center"
             android:layout_marginTop="22dp"
             android:ems="10"
@@ -70,8 +69,6 @@
             android:id="@+id/regConfirmpassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/regPassword"
-            android:layout_below="@+id/regPassword"
             android:layout_gravity="center"
             android:layout_marginTop="23dp"
             android:ems="10"
@@ -90,11 +87,9 @@
                     android:id="@+id/regGenSelect"
                     android:layout_width="60dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignStart="@+id/regConfirmpassword"
-                    android:layout_below="@+id/regConfirmpassword"
                     android:layout_marginLeft="29.5dp"
                     android:text="Select:"
-                    android:textSize="17dp" />
+                    android:textSize="17sp" />
 
 
 
@@ -120,7 +115,6 @@
                 android:id="@+id/regParentMobile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
 
@@ -133,8 +127,6 @@
                 android:id="@+id/registerButton"
                 android:layout_width="260dp"
                 android:layout_height="40dp"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="5dp"
                 android:layout_gravity="center"

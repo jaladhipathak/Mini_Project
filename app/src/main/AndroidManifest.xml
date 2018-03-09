@@ -18,20 +18,22 @@
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity"/>
         <activity android:name=".WelcomeScreen" />
-        <activity android:name=".Splash_Screen"/>
-        <activity
-            android:name=".Registration"
-            android:label="@string/title_activity_registration"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
-        <activity android:name=".MapsActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".Splash_Screen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".Registration"
+            android:label="@string/title_activity_registration"
+            android:theme="@style/AppTheme.NoActionBarNormal">
+
+        </activity>
+        <activity android:name=".MapsActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+
         </activity>
         <service android:name=".GoogleService">
         </service>

@@ -69,7 +69,8 @@
         android:layout_below="@+id/relativeLayout"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="43dp"
-        android:text="@string/signup"
+        android:text="@string/notregistred"
+        android:onClick="changefun"
         android:textSize="15.5dp" />
 
     <TextView
@@ -81,6 +82,7 @@
         android:layout_marginTop="57dp"
         android:text="@string/signin"
         android:textSize="35sp"
+        android:textColor="@color/colorPrimary"
         />
 
 </RelativeLayout>

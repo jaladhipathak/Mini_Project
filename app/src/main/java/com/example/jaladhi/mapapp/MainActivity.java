@@ -26,6 +26,12 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
+    public void changefun(View view){
+        if(view.getId()==R.id.notYetRegistered){
+            Intent intent3=new Intent(view.getContext(),Registration.class);
+            startActivity(intent3);
+        }
+    }
 
 }
 
