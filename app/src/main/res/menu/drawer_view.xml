@@ -34,5 +34,4 @@
         </item>
 
     </group>
-    <include layout="@layout/activity_maps" />
 </menu>

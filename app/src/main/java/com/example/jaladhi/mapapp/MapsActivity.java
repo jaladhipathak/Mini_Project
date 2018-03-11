@@ -50,22 +50,36 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.menubutton);
         myDrawerlayout =findViewById(R.id.drawer_layout);
+
         NavigationView navigationView=findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+
+                if (id == R.id.newpost) {
+                    Intent intent=new Intent(MapsActivity.this,New_Post.class);
+                    startActivity(intent);
+                } else if (id == R.id.smypost) {
+
+                } else if (id == R.id.sylove) {
+
+                } else if (id == R.id.chcity) {
+
+                } else if (id == R.id.refresh) {
+
+                } else if (id == R.id.logout) {
+
+                }
+
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+                return true;
+            }
+        });
         drawerToggle= setupDrawerToggle();
         myDrawerlayout.addDrawerListener(drawerToggle);
-        navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-                        item.setChecked(true);
-                        myDrawerlayout.closeDrawers();
-                        return true;
-
-                    }
-                }
-        );
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -120,7 +134,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        Log.e("Latitude",String.valueOf(CurrentLatitude));
 //        LatLng sydney = new LatLng(CurrentLatitude, CurrentLongitude);
 //        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker"));
 //        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
@@ -166,28 +179,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
 
-        if (id == R.id.newpost) {
-            // Handle the camera action
-        } else if (id == R.id.smypost) {
-
-        } else if (id == R.id.sylove) {
-
-        } else if (id == R.id.chcity) {
-
-        } else if (id == R.id.refresh) {
-
-        } else if (id == R.id.logout) {
-
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
