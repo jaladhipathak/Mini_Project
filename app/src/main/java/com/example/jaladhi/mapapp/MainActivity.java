@@ -6,23 +6,32 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-
+    YourPreference yourPrefrence;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        YourPreference yourPrefrence = YourPreference.getInstance(MainActivity.this);
+        yourPrefrence = YourPreference.getInstance(MainActivity.this);
 
     }
     public void myfun(View view){
         if(view.getId()==R.id.login){
-            Intent intent=new Intent(view.getContext(),WelcomeScreen.class);
+
             EditText edit=(EditText)findViewById(R.id.username);
+            EditText passw=(EditText)findViewById(R.id.password);
             String uname=edit.getText().toString();
-            intent.putExtra("usrname",uname);
-            startActivity(intent);
+            String pass=passw.getText().toString();
+            String storedname=yourPrefrence.getData(Constants.NAME1);
+            String storedpass=yourPrefrence.getData(Constants.PASSWORD1);
+            if(uname.equals(storedname) && pass.equals(storedpass)){
+                Intent intent=new Intent(view.getContext(),MapsActivity.class);
+                startActivity(intent);
+            }else {
+                Toast.makeText(this, "Invalid username or password", Toast.LENGTH_LONG).show();
+            }
 
         }
     }

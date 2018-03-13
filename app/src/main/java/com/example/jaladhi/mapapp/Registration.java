@@ -1,6 +1,7 @@
 package com.example.jaladhi.mapapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -81,6 +82,8 @@ public class Registration extends AppCompatActivity {
                 yourPrefrence.saveData(Constants.ISCHILD, Str_is_child);
                 yourPrefrence.saveData(Constants.PARENTMOBILE1,Str_pr_mob);
                 Log.d("Mapapp", Str_Name);
+                Intent intent=new Intent(Registration.this,MainActivity.class);
+                startActivity(intent);
             }
 
         }catch (Exception e){

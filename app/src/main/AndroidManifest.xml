@@ -26,7 +26,13 @@
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity" />
         <activity android:name=".WelcomeScreen" />
-        <activity android:name=".Splash_Screen" />
+        <activity android:name=".Splash_Screen" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".Registration"
             android:label="@string/title_activity_registration"
@@ -34,11 +40,7 @@
         <activity
             android:name=".MapsActivity"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <service android:name=".GoogleService" />

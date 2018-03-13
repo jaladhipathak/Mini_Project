@@ -1,5 +1,6 @@
 package com.example.jaladhi.mapapp;
 
+import android.app.FragmentManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -22,9 +23,11 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CircleOptions;
@@ -40,6 +43,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     Toolbar toolbar;
     private DrawerLayout myDrawerlayout;
     private android.support.v7.app.ActionBarDrawerToggle drawerToggle;
+    TextView tw;
+    YourPreference yourPrefrence;
+    LatLng x;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +56,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.menubutton);
         myDrawerlayout =findViewById(R.id.drawer_layout);
+        //tw=(TextView)findViewById(R.id.loggedusername);
+        //yourPrefrence=YourPreference.getInstance(MapsActivity.this);
+        //String name=yourPrefrence.getData(Constants.NAME1);
+        //tw.setText(name);
 
         NavigationView navigationView=findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -86,7 +96,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         intent2 = new Intent(MapsActivity.this, GoogleService.class);
         startService(intent2);
 
-
     }
 
     @Override
@@ -106,8 +115,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 CurrentLatitude = Double.valueOf(intent.getStringExtra("latitude"));
                 CurrentLongitude = Double.valueOf(intent.getStringExtra("longitude"));
                 mMap.clear();
-                LatLng x= new LatLng(CurrentLatitude,CurrentLongitude);
-                mMap.addCircle(new CircleOptions().center(x).radius(30.0).fillColor(Color.BLUE).strokeColor(Color.BLUE));
+                x= new LatLng(CurrentLatitude,CurrentLongitude);
+                //mMap.addCircle(new CircleOptions().center(x).radius(30.0).fillColor(Color.BLUE).strokeColor(Color.BLUE));
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(x));
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(x,15));
             }
@@ -133,6 +142,17 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+        mMap.setMyLocationEnabled(true);
+        //mMap.getUiSettings().setZoomControlsEnabled(true);
+        mMap.getUiSettings().setCompassEnabled(true);
+        mMap.getUiSettings().setMyLocationButtonEnabled(true);
+        mMap.getUiSettings().setRotateGesturesEnabled(true);
+        mMap.getUiSettings().setScrollGesturesEnabled(true);
+        mMap.getUiSettings().setTiltGesturesEnabled(true);
+        mMap.getUiSettings().setZoomGesturesEnabled(true);
+
+//        mMap.moveCamera(CameraUpdateFactory.newLatLng(x));
+//        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(x,15));
         // Add a marker in Sydney and move the camera
 //        LatLng sydney = new LatLng(CurrentLatitude, CurrentLongitude);
 //        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker"));
