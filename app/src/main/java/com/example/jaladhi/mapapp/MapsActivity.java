@@ -23,6 +23,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -56,12 +57,16 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.menubutton);
         myDrawerlayout =findViewById(R.id.drawer_layout);
-        //tw=(TextView)findViewById(R.id.loggedusername);
-        //yourPrefrence=YourPreference.getInstance(MapsActivity.this);
-        //String name=yourPrefrence.getData(Constants.NAME1);
-        //tw.setText(name);
 
         NavigationView navigationView=findViewById(R.id.nav_view);
+
+        //set username text on header
+        View headerview=navigationView.getHeaderView(0);
+        tw=(TextView)headerview.findViewById(R.id.loggedusername);
+        yourPrefrence=YourPreference.getInstance(MapsActivity.this);
+        String name=yourPrefrence.getData(Constants.NAME1);
+        tw.setText(name);
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -120,7 +125,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(x));
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(x,15));
             }
-        };;
+        };
 
     }
     @Override
