@@ -16,4 +16,5 @@
     <string name="logout">Log out</string>
     <string name="registertitle">Registration</string>
     <string name="notregistred">Not Registred yet? Sign Up</string>
+    <string name="title_activity_fbactivity">fbactivity</string>
 </resources>
