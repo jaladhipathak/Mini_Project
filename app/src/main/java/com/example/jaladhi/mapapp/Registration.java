@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -12,18 +13,38 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class Registration extends AppCompatActivity {
     private EditText regName,regEmail,regMobile,regPassword,regConfirmPassword,regParentMobile;
     private RadioButton regGenParent,regGenChild;
     String Str_Name, Str_Email, Str_Mob, Str_Pass, Str_Conf_pass, Str_pr_mob, Str_is_child;
     YourPreference yourPrefrence;
+    private FirebaseDatabase ref;
+    private DatabaseReference pRef;
+    private DatabaseReference cRef;
+    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_registration);
+
         yourPrefrence = YourPreference.getInstance(Registration.this);
+
+        ref=FirebaseDatabase.getInstance("https://mapapp-a2762.firebaseio.com/");
+        pRef=ref.getReference("Parent_detail");
+        cRef=ref.getReference("Child_detail");
+        auth=FirebaseAuth.getInstance();
+
         regName=(EditText)findViewById(R.id.regName);
         regEmail=(EditText)findViewById(R.id.regEmail);
         regMobile=(EditText)findViewById(R.id.regMobile);
@@ -32,6 +53,8 @@ public class Registration extends AppCompatActivity {
         regParentMobile=(EditText)findViewById(R.id.regParentMobile);
         regGenParent=(RadioButton)findViewById(R.id.regGenParent);
         regGenChild=(RadioButton)findViewById(R.id.regGenChild);
+        //Str_is_child="false";
+
         regGenParent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -51,7 +74,6 @@ public class Registration extends AppCompatActivity {
                 regParentMobile.setVisibility(View.VISIBLE);
             }
         });
-
 
     }
     public void newfun(View view){
@@ -81,7 +103,68 @@ public class Registration extends AppCompatActivity {
                 yourPrefrence.saveData(Constants.PASSWORD1,Str_Pass);
                 yourPrefrence.saveData(Constants.ISCHILD, Str_is_child);
                 yourPrefrence.saveData(Constants.PARENTMOBILE1,Str_pr_mob);
-                Log.d("Mapapp", Str_Name);
+
+                if(regGenParent.isChecked()){
+
+                    auth.createUserWithEmailAndPassword(Str_Email, Str_Pass).addOnCompleteListener(Registration.this, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+
+                                    if (task.isSuccessful()) {
+
+                                        Log.d("msg","createUserWithEmail:success");
+                                    } else {
+
+                                        Log.w("msg", "createUserWithEmail:failure", task.getException());
+                                        Toast.makeText(Registration.this, "Authentication failed.",
+                                                Toast.LENGTH_SHORT).show();
+                                    }
+
+                                }
+                            });
+                    FirebaseUser user = auth.getCurrentUser();
+                    if(user!=null) {
+                        String uid = user.getUid();
+                        pRef.child(uid);
+                        pRef.child(uid).child("Name").setValue(Str_Name);
+                        pRef.child(uid).child("Mobileno").setValue(Str_Mob);
+                    }
+                    else {
+                        Toast.makeText(Registration.this,"Null User",Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+                else if(regGenChild.isChecked()){
+
+                    auth.createUserWithEmailAndPassword(Str_Email, Str_Pass)
+                            .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
+
+                                        Log.d("msg","createUserWithEmail:success");
+
+                                    } else {
+
+                                        Log.w("msg", "createUserWithEmail:failure", task.getException());
+                                        Toast.makeText(Registration.this, "Authentication failed.",
+                                                Toast.LENGTH_SHORT).show();
+                                    }
+
+                                }
+                            });
+                    FirebaseUser user = auth.getCurrentUser();
+                    if(user!=null) {
+                        String uid = user.getUid();
+                        cRef.child(uid);
+                        cRef.child(uid).child("Name").setValue(Str_Name);
+                        cRef.child(uid).child("Mobileno").setValue(Str_Mob);
+                        cRef.child(uid).child("ParentMobno").setValue(Str_pr_mob);
+                    }else {
+                        Toast.makeText(Registration.this,"Null User",Toast.LENGTH_SHORT).show();
+                    }
+                }
+
                 Intent intent=new Intent(Registration.this,MainActivity.class);
                 startActivity(intent);
             }

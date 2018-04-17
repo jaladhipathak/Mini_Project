@@ -34,6 +34,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -47,6 +48,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     TextView tw;
     YourPreference yourPrefrence;
     LatLng x;
+    private FirebaseAuth auth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +61,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         myDrawerlayout =findViewById(R.id.drawer_layout);
 
         NavigationView navigationView=findViewById(R.id.nav_view);
+        auth = FirebaseAuth.getInstance();
 
         //set username text on header
         View headerview=navigationView.getHeaderView(0);
@@ -84,7 +87,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 } else if (id == R.id.refresh) {
 
                 } else if (id == R.id.logout) {
-
+                    auth.signOut();
+                    startActivity(new Intent(MapsActivity.this,MainActivity.class));
                 }
 
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
