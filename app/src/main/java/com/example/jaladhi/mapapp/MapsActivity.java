@@ -25,6 +25,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -35,6 +36,9 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -49,6 +53,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     YourPreference yourPrefrence;
     LatLng x;
     private FirebaseAuth auth;
+    private DatabaseReference pRef;
+    private DatabaseReference cRef;
+    private FirebaseDatabase ref;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +68,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         myDrawerlayout =findViewById(R.id.drawer_layout);
 
         NavigationView navigationView=findViewById(R.id.nav_view);
+        ref=FirebaseDatabase.getInstance();
+        pRef=ref.getReference("Parent_detail");
+        cRef=ref.getReference("Child_detail");
+        auth=FirebaseAuth.getInstance();
         auth = FirebaseAuth.getInstance();
 
         //set username text on header
@@ -68,7 +79,35 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         tw=(TextView)headerview.findViewById(R.id.loggedusername);
         yourPrefrence=YourPreference.getInstance(MapsActivity.this);
         String name=yourPrefrence.getData(Constants.NAME1);
+        String Mobno=yourPrefrence.getData(Constants.MOBILE1);
         tw.setText(name);
+
+        if(Constants.ISCHILD.equals("false")){
+            FirebaseUser user=auth.getCurrentUser();
+            if(user!=null) {
+                        String uid = user.getUid();
+                        pRef.child(uid);
+                        pRef.child(uid).child("Name").setValue(name);
+                        pRef.child(uid).child("Mobileno").setValue(Mobno);
+                    }
+                    else {
+                        Toast.makeText(MapsActivity.this,"Null User",Toast.LENGTH_SHORT).show();
+                    }
+
+        }
+        else if(Constants.ISCHILD.equals("true")){
+            String pmobileno=yourPrefrence.getData(Constants.PARENTMOBILE1);
+            FirebaseUser user = auth.getCurrentUser();
+                    if(user!=null) {
+                        String uid = user.getUid();
+                        cRef.child(uid);
+                        cRef.child(uid).child("Name").setValue(name);
+                        cRef.child(uid).child("Mobileno").setValue(Mobno);
+                        cRef.child(uid).child("ParentMobno").setValue(pmobileno);
+                    }else {
+                        Toast.makeText(MapsActivity.this,"Null User",Toast.LENGTH_SHORT).show();
+                    }
+        }
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override

@@ -1,35 +1,27 @@
 {
   "project_info": {
-    "project_number": "230972509805",
-    "firebase_url": "https://mapapp-a2762.firebaseio.com",
-    "project_id": "mapapp-a2762",
-    "storage_bucket": "mapapp-a2762.appspot.com"
+    "project_number": "639499692622",
+    "firebase_url": "https://mapapp-16a9c.firebaseio.com",
+    "project_id": "mapapp-16a9c",
+    "storage_bucket": "mapapp-16a9c.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:230972509805:android:fbc7b8a9b15ca88a",
+        "mobilesdk_app_id": "1:639499692622:android:fbc7b8a9b15ca88a",
         "android_client_info": {
           "package_name": "com.example.jaladhi.mapapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "230972509805-23qbmjfcke7utpi1lh5jsijui27itu5i.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.jaladhi.mapapp",
-            "certificate_hash": "9f5c9e16c5bcfb99b3fa0f2ec05be365810f33af"
-          }
-        },
-        {
-          "client_id": "230972509805-gtv1r7pcv7785puh3fqd60fq3hdf0e0q.apps.googleusercontent.com",
+          "client_id": "639499692622-ljb7hhgps0f58tl5g4pga5ev104tlkqr.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDDC_0nYTf7eOFeVZKjc0InRh27oaQHnE4"
+          "current_key": "AIzaSyBsEtkBHaaCgc9WjOl4db5Fa75vHU-TTeM"
         }
       ],
       "services": {
@@ -37,13 +29,8 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "230972509805-gtv1r7pcv7785puh3fqd60fq3hdf0e0q.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
           "status": 2

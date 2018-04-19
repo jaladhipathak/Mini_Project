@@ -40,7 +40,7 @@ public class Registration extends AppCompatActivity {
 
         yourPrefrence = YourPreference.getInstance(Registration.this);
 
-        ref=FirebaseDatabase.getInstance("https://mapapp-a2762.firebaseio.com/");
+        ref=FirebaseDatabase.getInstance();
         pRef=ref.getReference("Parent_detail");
         cRef=ref.getReference("Child_detail");
         auth=FirebaseAuth.getInstance();
@@ -122,16 +122,20 @@ public class Registration extends AppCompatActivity {
 
                                 }
                             });
-                    FirebaseUser user = auth.getCurrentUser();
-                    if(user!=null) {
-                        String uid = user.getUid();
-                        pRef.child(uid);
-                        pRef.child(uid).child("Name").setValue(Str_Name);
-                        pRef.child(uid).child("Mobileno").setValue(Str_Mob);
-                    }
-                    else {
-                        Toast.makeText(Registration.this,"Null User",Toast.LENGTH_SHORT).show();
-                    }
+//                    Intent intent=new Intent(Registration.this,MapsActivity.class);
+//                    intent.putExtra("Str_Name",Str_Name);
+//                    intent.putExtra("Str_Mob",Str_Mob);
+//                    startActivity(intent);
+//                    FirebaseUser user = auth.getCurrentUser();
+//                    if(user!=null) {
+//                        String uid = user.getUid();
+//                        pRef.child(uid);
+//                        pRef.child(uid).child("Name").setValue(Str_Name);
+//                        pRef.child(uid).child("Mobileno").setValue(Str_Mob);
+//                    }
+//                    else {
+//                        Toast.makeText(Registration.this,"Null User",Toast.LENGTH_SHORT).show();
+//                    }
 
                 }
                 else if(regGenChild.isChecked()){
@@ -153,16 +157,22 @@ public class Registration extends AppCompatActivity {
 
                                 }
                             });
-                    FirebaseUser user = auth.getCurrentUser();
-                    if(user!=null) {
-                        String uid = user.getUid();
-                        cRef.child(uid);
-                        cRef.child(uid).child("Name").setValue(Str_Name);
-                        cRef.child(uid).child("Mobileno").setValue(Str_Mob);
-                        cRef.child(uid).child("ParentMobno").setValue(Str_pr_mob);
-                    }else {
-                        Toast.makeText(Registration.this,"Null User",Toast.LENGTH_SHORT).show();
-                    }
+//                    Intent intent=new Intent(Registration.this,MapsActivity.class);
+//                    intent.putExtra("Str_Name",Str_Name);
+//                    intent.putExtra("Str_Mob",Str_Mob);
+//                    intent.putExtra("Str_pr_mob",Str_pr_mob);
+//                    startActivity(intent);
+
+//                    FirebaseUser user = auth.getCurrentUser();
+//                    if(user!=null) {
+//                        String uid = user.getUid();
+//                        cRef.child(uid);
+//                        cRef.child(uid).child("Name").setValue(Str_Name);
+//                        cRef.child(uid).child("Mobileno").setValue(Str_Mob);
+//                        cRef.child(uid).child("ParentMobno").setValue(Str_pr_mob);
+//                    }else {
+//                        Toast.makeText(Registration.this,"Null User",Toast.LENGTH_SHORT).show();
+//                    }
                 }
 
                 Intent intent=new Intent(Registration.this,MainActivity.class);

@@ -23,7 +23,7 @@ public class fbactivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         b1=(Button)findViewById(R.id.fbadd);
-        ref=FirebaseDatabase.getInstance("https://mapapp-a2762.firebaseio.com/");
+        ref=FirebaseDatabase.getInstance();
         final DatabaseReference mref=ref.getReference("table1");
 
 
