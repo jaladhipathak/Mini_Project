@@ -56,6 +56,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private FirebaseAuth.AuthStateListener authStateListener;
     private DatabaseReference pRef;
     private DatabaseReference cRef;
+    private DatabaseReference uRef;
     private FirebaseDatabase ref;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +73,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         ref=FirebaseDatabase.getInstance();
         pRef=ref.getReference("Parent_detail");
         cRef=ref.getReference("Child_detail");
+        uRef=ref.getReference("Usage_detail");
         auth=FirebaseAuth.getInstance();
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -169,6 +171,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 CurrentLatitude = Double.valueOf(intent.getStringExtra("latitude"));
                 CurrentLongitude = Double.valueOf(intent.getStringExtra("longitude"));
+                String ischild=yourPrefrence.getData(Constants.ISCHILD);
+                if(ischild.equals("true")){
+                    String id=auth.getCurrentUser().getUid();
+                    uRef.child(id).child("Latitude").setValue(CurrentLatitude);
+                    uRef.child(id).child("Longitude").setValue(CurrentLatitude);
+                }
                 mMap.clear();
                 x= new LatLng(CurrentLatitude,CurrentLongitude);
                 //mMap.addCircle(new CircleOptions().center(x).radius(30.0).fillColor(Color.BLUE).strokeColor(Color.BLUE));

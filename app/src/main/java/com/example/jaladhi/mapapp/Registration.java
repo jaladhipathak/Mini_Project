@@ -31,6 +31,7 @@ public class Registration extends AppCompatActivity {
     private FirebaseDatabase ref;
     private DatabaseReference pRef;
     private DatabaseReference cRef;
+    private DatabaseReference uRef;
     private FirebaseAuth auth;
 
     @Override
@@ -43,6 +44,7 @@ public class Registration extends AppCompatActivity {
         ref=FirebaseDatabase.getInstance();
         pRef=ref.getReference("Parent_detail");
         cRef=ref.getReference("Child_detail");
+        uRef=ref.getReference("Usage_detail");
         auth=FirebaseAuth.getInstance();
 
         regName=(EditText)findViewById(R.id.regName);
@@ -175,6 +177,7 @@ public class Registration extends AppCompatActivity {
                                                     cRef.child(uid).child("Name").setValue(Str_Name);
                                                     cRef.child(uid).child("Mobileno").setValue(Str_Mob);
                                                     cRef.child(uid).child("ParentMobno").setValue(Str_pr_mob);
+                                                    uRef.child(uid);
                                                 }else {
                                                     Toast.makeText(Registration.this,"Null User",Toast.LENGTH_SHORT).show();
                                                 }
