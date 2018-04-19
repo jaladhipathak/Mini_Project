@@ -53,6 +53,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     YourPreference yourPrefrence;
     LatLng x;
     private FirebaseAuth auth;
+    private FirebaseAuth.AuthStateListener authStateListener;
     private DatabaseReference pRef;
     private DatabaseReference cRef;
     private FirebaseDatabase ref;
@@ -72,7 +73,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         pRef=ref.getReference("Parent_detail");
         cRef=ref.getReference("Child_detail");
         auth=FirebaseAuth.getInstance();
-        auth = FirebaseAuth.getInstance();
+        authStateListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if(auth.getCurrentUser()==null)
+                    startActivity(new Intent(MapsActivity.this,MainActivity.class));
+            }
+        };
 
         //set username text on header
         View headerview=navigationView.getHeaderView(0);
@@ -127,7 +134,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 } else if (id == R.id.logout) {
                     auth.signOut();
-                    startActivity(new Intent(MapsActivity.this,MainActivity.class));
                 }
 
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -156,6 +162,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     protected void onStart(){
         super.onStart();
+        auth.addAuthStateListener(authStateListener);
         broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -176,6 +183,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onPause();
         unregisterReceiver(broadcastReceiver);
         stopService(intent2);
+    }
+    @Override
+    protected void onStop(){
+        super.onStop();
+        auth.removeAuthStateListener(authStateListener);
     }
     /**
      * Manipulates the map once available.

@@ -106,22 +106,41 @@ public class Registration extends AppCompatActivity {
 
                 if(regGenParent.isChecked()){
 
-                    auth.createUserWithEmailAndPassword(Str_Email, Str_Pass).addOnCompleteListener(Registration.this, new OnCompleteListener<AuthResult>() {
+                    auth.createUserWithEmailAndPassword(Str_Email, Str_Pass)
+                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
-
+                                    Toast.makeText(Registration.this, "Register done", Toast.LENGTH_SHORT).show();
                                     if (task.isSuccessful()) {
+                                        auth.signInWithEmailAndPassword(Str_Email,Str_Pass).addOnCompleteListener(Registration.this, new OnCompleteListener<AuthResult>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                                Toast.makeText(Registration.this, "signin", Toast.LENGTH_SHORT).show();
+                                                FirebaseUser user = auth.getCurrentUser();
+                                                if(user!=null) {
+                                                    String uid = user.getUid();
+                                                    pRef.child(uid);
+                                                    pRef.child(uid).child("Name").setValue(Str_Name);
+                                                    pRef.child(uid).child("Mobileno").setValue(Str_Mob);
+                                                }
+                                                else {
+                                                    Toast.makeText(Registration.this,"Null User",Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                        });
 
                                         Log.d("msg","createUserWithEmail:success");
                                     } else {
-
                                         Log.w("msg", "createUserWithEmail:failure", task.getException());
                                         Toast.makeText(Registration.this, "Authentication failed.",
                                                 Toast.LENGTH_SHORT).show();
                                     }
 
+
+
                                 }
                             });
+
 //                    Intent intent=new Intent(Registration.this,MapsActivity.class);
 //                    intent.putExtra("Str_Name",Str_Name);
 //                    intent.putExtra("Str_Mob",Str_Mob);
@@ -141,11 +160,26 @@ public class Registration extends AppCompatActivity {
                 else if(regGenChild.isChecked()){
 
                     auth.createUserWithEmailAndPassword(Str_Email, Str_Pass)
-                            .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                            .addOnCompleteListener( new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
 
+                                        auth.signInWithEmailAndPassword(Str_Email,Str_Pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                                FirebaseUser user = auth.getCurrentUser();
+                                                if(user!=null) {
+                                                    String uid = user.getUid();
+                                                    cRef.child(uid);
+                                                    cRef.child(uid).child("Name").setValue(Str_Name);
+                                                    cRef.child(uid).child("Mobileno").setValue(Str_Mob);
+                                                    cRef.child(uid).child("ParentMobno").setValue(Str_pr_mob);
+                                                }else {
+                                                    Toast.makeText(Registration.this,"Null User",Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                        });
                                         Log.d("msg","createUserWithEmail:success");
 
                                     } else {
@@ -155,8 +189,11 @@ public class Registration extends AppCompatActivity {
                                                 Toast.LENGTH_SHORT).show();
                                     }
 
+
+
                                 }
                             });
+
 //                    Intent intent=new Intent(Registration.this,MapsActivity.class);
 //                    intent.putExtra("Str_Name",Str_Name);
 //                    intent.putExtra("Str_Mob",Str_Mob);
