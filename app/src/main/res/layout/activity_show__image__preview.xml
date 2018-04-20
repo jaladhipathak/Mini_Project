@@ -55,7 +55,7 @@
             </RadioGroup>
 
             <EditText
-                android:id="@+id/editText"
+                android:id="@+id/captiondetail"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"

@@ -20,6 +20,7 @@ public class New_Post extends AppCompatActivity {
     ImageButton imageButton;
     ImageButton gallerybutton;
     String imgstring;
+    String latitude,longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,8 @@ public class New_Post extends AppCompatActivity {
         setContentView(R.layout.activity_new__post);
         imageButton = (ImageButton) findViewById(R.id.cameraicon);
         gallerybutton = (ImageButton) findViewById(R.id.galleryicon);
+        latitude=getIntent().getStringExtra("lat");
+        longitude=getIntent().getStringExtra("long");
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,6 +59,8 @@ public class New_Post extends AppCompatActivity {
                 if (extras != null) {
                     nintent.putExtras(extras);
                     nintent.putExtra("mode","c");
+                    nintent.putExtra("lat",latitude);
+                    nintent.putExtra("long",longitude);
                     startActivity(nintent);
                 }
 
@@ -71,6 +76,8 @@ public class New_Post extends AppCompatActivity {
                     Intent nintent = new Intent(New_Post.this, Show_Image_Preview.class);
                     nintent.putExtra("mode","g");
                     nintent.putExtra("path", imgstring);
+                    nintent.putExtra("lat",latitude);
+                    nintent.putExtra("long",longitude);
                     startActivity(nintent);
                 } else {
                     Toast.makeText(this, "You haven't picked Image", Toast.LENGTH_LONG).show();

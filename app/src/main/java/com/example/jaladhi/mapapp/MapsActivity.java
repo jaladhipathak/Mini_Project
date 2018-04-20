@@ -44,7 +44,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private GoogleMap mMap;
     double CurrentLatitude,CurrentLongitude;
-    private BroadcastReceiver broadcastReceiver;
+    protected BroadcastReceiver broadcastReceiver;
     Intent intent2;
     Toolbar toolbar;
     private DrawerLayout myDrawerlayout;
@@ -125,6 +125,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 if (id == R.id.newpost) {
                     Intent intent=new Intent(MapsActivity.this,New_Post.class);
+                    intent.putExtra("lat",Double.toString(CurrentLatitude));
+                    intent.putExtra("long",Double.toString(CurrentLongitude));
+                    //Log.d("SendingLatitude",CurrentLatitude);
                     startActivity(intent);
                 } else if (id == R.id.smypost) {
 
