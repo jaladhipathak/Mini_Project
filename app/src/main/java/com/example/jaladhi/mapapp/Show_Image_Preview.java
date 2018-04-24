@@ -144,7 +144,7 @@ public class Show_Image_Preview extends AppCompatActivity {
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 sRef.child(imageid);
                 sRef.child(imageid).child("Userid").setValue(uid);
-                sRef.child(imageid).child("ImagePath").setValue("images/"+imageid);
+                sRef.child(imageid).child("ImagePath").setValue(taskSnapshot.getDownloadUrl().toString());
                 sRef.child(imageid).child("CaptionDetail").setValue(caption);
                 sRef.child(imageid).child("Storylatitude").setValue(latitude);
                 sRef.child(imageid).child("Storylongitude").setValue(longitude);

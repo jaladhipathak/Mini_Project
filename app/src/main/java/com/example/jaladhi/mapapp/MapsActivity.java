@@ -38,6 +38,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -47,7 +48,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import static java.security.AccessController.getContext;
@@ -71,6 +75,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private DatabaseReference uRef;
     private FirebaseDatabase ref;
     private DatabaseReference sRef;
+    private Map<String,String> markerdetail;
     int count;
 
     @Override
@@ -83,6 +88,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.menubutton);
         myDrawerlayout = findViewById(R.id.drawer_layout);
+        markerdetail = new HashMap<String, String>();
         count = 0;
 
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -181,6 +187,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 //            }
 //        });
 
+
         showallposts();
 
     }
@@ -273,6 +280,21 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 //        LatLng sydney = new LatLng(CurrentLatitude, CurrentLongitude);
 //        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker"));
 //        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
+            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                @Override
+                public boolean onMarkerClick(Marker marker) {
+
+                    String markerid=marker.getId();
+                    String impath=markerdetail.get(markerid);
+                    String captionDetail=markerdetail.get(impath);
+                    Intent nintent = new Intent(MapsActivity.this,PhotoViewer.class);
+                    nintent.putExtra("Caption",captionDetail);
+                    nintent.putExtra("ImagePath", impath);
+                    startActivity(nintent);
+                    return false;
+                }
+            });
         }
     }
     private android.support.v7.app.ActionBarDrawerToggle setupDrawerToggle(){
@@ -345,19 +367,28 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         String slong=detail.get("Storylongitude");
                         String gb=detail.get("Good_Bad");
                         String captiondetail=detail.get("CaptionDetail");
-                        Double Storylat=Double.parseDouble(slat);
-                        Double Storylong=Double.parseDouble(slong);
-
-                        LatLng newmarker=new LatLng(Storylat,Storylong);
-                        if(gb.equals("good")) {
-                            mMap.addMarker(new MarkerOptions().position(newmarker).title(captiondetail).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
-                        }else {
-                            mMap.addMarker(new MarkerOptions().position(newmarker).title(captiondetail).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+                        Double Storylat=0.0,Storylong=0.0;
+                        if(slat!=null && slong!=null) {
+                            Storylat = Double.parseDouble(slat);
+                            Storylong = Double.parseDouble(slong);
                         }
-                        Log.v("DETAILS","StoryLatitude"+slat);
-                        Log.v("DETAILS","StoryLongitude"+slong);
-                        Log.v("DETAILS","GOODBad"+gb);
-
+                        String imagename = detail.get("ImagePath");
+                        LatLng newmarker=new LatLng(Storylat,Storylong);
+                        String markerid;
+                        if(gb!=null) {
+                            if (gb.equals("good")) {
+                                Marker marker = mMap.addMarker(new MarkerOptions().position(newmarker).title(captiondetail).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+                                markerid = marker.getId();
+                            } else {
+                                Marker marker = mMap.addMarker(new MarkerOptions().position(newmarker).title(captiondetail).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+                                markerid = marker.getId();
+                            }
+                            Log.v("DETAILS", "StoryLatitude" + slat);
+                            Log.v("DETAILS", "StoryLongitude" + slong);
+                            Log.v("DETAILS", "GOODBad" + gb);
+                            markerdetail.put(markerid, imagename);
+                            markerdetail.put(imagename,captiondetail);
+                        }
                     }
                 }
 
