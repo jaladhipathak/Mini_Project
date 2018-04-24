@@ -54,7 +54,10 @@
             android:label="@string/title_activity_fbactivity"
             android:theme="@style/AppTheme" />
         <activity android:name=".SeeLovables" />
-        <activity android:name=".PhotoViewer"></activity>
+        <activity android:name=".PhotoViewer" />
+        <activity
+            android:name=".SeeLovable"
+            android:label="@string/title_activity_see_lovable"></activity>
     </application>
 
 </manifest>

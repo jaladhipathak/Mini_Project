@@ -26,7 +26,6 @@ public class PhotoViewer extends AppCompatActivity {
         imgPath=getIntent().getStringExtra("ImagePath");
         captionDetail=getIntent().getStringExtra("Caption");
         imageView = (ImageView) findViewById(R.id.viewimage);
-        //Log.v("msgx",sRef.getDownloadUrl().toString());
         Picasso.get().load(imgPath).into(imageView);
         textView = (TextView) findViewById(R.id.viewcaption);
         textView.setText(captionDetail);

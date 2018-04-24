@@ -76,6 +76,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private FirebaseDatabase ref;
     private DatabaseReference sRef;
     private Map<String,String> markerdetail;
+    private String pmob,cpmob;
+    public String cid;
     int count;
 
     @Override
@@ -153,7 +155,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 } else if (id == R.id.smypost) {
 
                 } else if (id == R.id.sylove) {
-
+                    Seelovables();
                 } else if (id == R.id.chcity) {
 
                 } else if (id == R.id.refresh) {
@@ -214,7 +216,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 if (ischild.equals("true")) {
                     String id = auth.getCurrentUser().getUid();
                     uRef.child(id).child("Latitude").setValue(CurrentLatitude);
-                    uRef.child(id).child("Longitude").setValue(CurrentLatitude);
+                    uRef.child(id).child("Longitude").setValue(CurrentLongitude);
                 }
                 //mMap.clear();
                 x = new LatLng(CurrentLatitude, CurrentLongitude);
@@ -399,6 +401,61 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             }
         });
+
+    }
+
+    public void Seelovables(){
+        String user=auth.getCurrentUser().getUid();
+        pRef.child(user).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    Map<String,String> pdetail= (Map)dataSnapshot.getValue();
+                    pmob = pdetail.get("Mobileno");
+                    //Log.v("MSGLoc",pmob);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        cRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    for(DataSnapshot cmp:dataSnapshot.getChildren()){
+                        Map<String,String> mdetail = (Map) cmp.getValue();
+                        cpmob = mdetail.get("ParentMobno");
+                        if(pmob.equals(cpmob)){
+
+                            cid = cmp.getKey();
+                            //Log.v("MSGLoc",cid);
+                            Intent lovableintent = new Intent(MapsActivity.this,SeeLovable.class);
+                            lovableintent.putExtra("cid",cid);
+                            startActivity(lovableintent);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        //String childid = cid;
+        //Bundle extras = new Bundle();
+        //extras.putString("cid",childid);
+        //lovableintent.putExtras(extras);
+        //lovableintent.putExtra("Hi","Hello");
+
+
+
     }
 //    private FloatingActionButton getFAB() {
 //        Context context = new android.support.v7.internal.view.ContextThemeWrapper(getContext(), R.style.AppTheme);
