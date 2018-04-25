@@ -17,11 +17,11 @@
             android:title="@string/Seeylove">
 
         </item>
-        <item
-            android:id="@+id/chcity"
-            android:title="@string/changecity">
+        <!--<item-->
+            <!--android:id="@+id/chcity"-->
+            <!--android:title="@string/changecity">-->
 
-        </item>
+        <!--</item>-->
         <item
             android:id="@+id/refresh"
             android:title="@string/refresh">

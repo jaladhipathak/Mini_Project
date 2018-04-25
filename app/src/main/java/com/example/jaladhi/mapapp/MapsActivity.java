@@ -153,13 +153,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     //Log.d("SendingLatitude",CurrentLatitude);
                     startActivity(intent);
                 } else if (id == R.id.smypost) {
-
+                    mMap.clear();
+                    showMyPosts();
                 } else if (id == R.id.sylove) {
                     Seelovables();
-                } else if (id == R.id.chcity) {
 
                 } else if (id == R.id.refresh) {
-
+                    mMap.clear();
+                    showallposts();
                 } else if (id == R.id.logout) {
                     auth.signOut();
                 }
@@ -357,6 +358,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     public void showallposts(){
 
+        markerdetail = new HashMap<String, String>();
         sRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -456,6 +458,57 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
 
+    }
+    public void showMyPosts(){
+        markerdetail=new HashMap<String, String>();
+        sRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.v("Databaseresponse","data: "+dataSnapshot.getValue());
+                if(dataSnapshot.exists()){
+                    for(DataSnapshot sid:dataSnapshot.getChildren()){
+                        Map<String,String> detail=(Map) sid.getValue();
+
+                        String uid = detail.get("Userid");
+                        String cuid = auth.getCurrentUser().getUid();
+                        if(uid.equals(cuid)) {
+                            String slat = detail.get("Storylatitude");
+                            String slong = detail.get("Storylongitude");
+                            String gb = detail.get("Good_Bad");
+                            String captiondetail = detail.get("CaptionDetail");
+                            Double Storylat = 0.0, Storylong = 0.0;
+                            if (slat != null && slong != null) {
+                                Storylat = Double.parseDouble(slat);
+                                Storylong = Double.parseDouble(slong);
+                            }
+                            String imagename = detail.get("ImagePath");
+                            LatLng newmarker = new LatLng(Storylat, Storylong);
+                            String markerid;
+                            if (gb != null) {
+                                if (gb.equals("good")) {
+                                    Marker marker = mMap.addMarker(new MarkerOptions().position(newmarker).title(captiondetail).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+                                    markerid = marker.getId();
+                                } else {
+                                    Marker marker = mMap.addMarker(new MarkerOptions().position(newmarker).title(captiondetail).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+                                    markerid = marker.getId();
+                                }
+                                Log.v("DETAILS", "StoryLatitude" + slat);
+                                Log.v("DETAILS", "StoryLongitude" + slong);
+                                Log.v("DETAILS", "GOODBad" + gb);
+                                markerdetail.put(markerid, imagename);
+                                markerdetail.put(imagename, captiondetail);
+                            }
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 //    private FloatingActionButton getFAB() {
 //        Context context = new android.support.v7.internal.view.ContextThemeWrapper(getContext(), R.style.AppTheme);
