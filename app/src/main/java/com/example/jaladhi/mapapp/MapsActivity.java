@@ -77,7 +77,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private DatabaseReference sRef;
     private Map<String,String> markerdetail;
     private String pmob,cpmob;
-    public String cid;
+    public String cid,Username;
     int count;
 
     @Override
@@ -112,11 +112,45 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         View headerview = navigationView.getHeaderView(0);
         tw = (TextView) headerview.findViewById(R.id.loggedusername);
         yourPrefrence = YourPreference.getInstance(MapsActivity.this);
-        String name = yourPrefrence.getData(Constants.NAME1);
         String Mobno = yourPrefrence.getData(Constants.MOBILE1);
-        tw.setText(name);
+        String xyz = auth.getCurrentUser().getDisplayName();
+        if(xyz!=null) {
+            if(xyz.equals("child")){
+                cRef.child(auth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Map<String,String> details= (Map) dataSnapshot.getValue();
+                        Username=details.get("Name");
+                        if (Username != null)
+                            tw.setText(Username);
 
-        if (Constants.ISCHILD.equals("false")) {
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+            }else if(xyz.equals("parent")){
+                pRef.child(auth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Map<String,String> details = (Map) dataSnapshot.getValue();
+                        Username = details.get("Name");
+                        if (Username != null)
+                            tw.setText(Username);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+            }
+
+        }
+
+        /*if (Constants.ISCHILD.equals("false")) {
             FirebaseUser user = auth.getCurrentUser();
             if (user != null) {
                 String uid = user.getUid();
@@ -139,7 +173,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             } else {
                 Toast.makeText(MapsActivity.this, "Null User", Toast.LENGTH_SHORT).show();
             }
-        }
+        }*/
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
