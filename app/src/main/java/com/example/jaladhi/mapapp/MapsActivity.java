@@ -213,11 +213,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 CurrentLatitude = Double.valueOf(intent.getStringExtra("latitude"));
                 CurrentLongitude = Double.valueOf(intent.getStringExtra("longitude"));
-                String ischild = yourPrefrence.getData(Constants.ISCHILD);
-                if (ischild.equals("true")) {
-                    String id = auth.getCurrentUser().getUid();
-                    uRef.child(id).child("Latitude").setValue(CurrentLatitude);
-                    uRef.child(id).child("Longitude").setValue(CurrentLongitude);
+                //String ischild = yourPrefrence.getData(Constants.ISCHILD);
+                String ischild= auth.getCurrentUser().getDisplayName();
+                if(ischild!=null) {
+                    if (ischild.equals("child")) {
+                        String id = auth.getCurrentUser().getUid();
+                        uRef.child(id).child("Latitude").setValue(CurrentLatitude);
+                        uRef.child(id).child("Longitude").setValue(CurrentLongitude);
+                    }
                 }
                 //mMap.clear();
                 x = new LatLng(CurrentLatitude, CurrentLongitude);

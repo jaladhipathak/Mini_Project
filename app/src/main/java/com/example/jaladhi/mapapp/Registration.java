@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -112,15 +113,17 @@ public class Registration extends AppCompatActivity {
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
-                                    Toast.makeText(Registration.this, "Register done", Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(Registration.this, "Register done", Toast.LENGTH_SHORT).show();
                                     if (task.isSuccessful()) {
                                         auth.signInWithEmailAndPassword(Str_Email,Str_Pass).addOnCompleteListener(Registration.this, new OnCompleteListener<AuthResult>() {
                                             @Override
                                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                                Toast.makeText(Registration.this, "signin", Toast.LENGTH_SHORT).show();
+                                                //Toast.makeText(Registration.this, "signin", Toast.LENGTH_SHORT).show();
                                                 FirebaseUser user = auth.getCurrentUser();
                                                 if(user!=null) {
                                                     String uid = user.getUid();
+                                                    UserProfileChangeRequest ureq = new UserProfileChangeRequest.Builder().setDisplayName("parent").build();
+                                                    user.updateProfile(ureq);
                                                     pRef.child(uid);
                                                     pRef.child(uid).child("Name").setValue(Str_Name);
                                                     pRef.child(uid).child("Mobileno").setValue(Str_Mob);
@@ -173,6 +176,8 @@ public class Registration extends AppCompatActivity {
                                                 FirebaseUser user = auth.getCurrentUser();
                                                 if(user!=null) {
                                                     String uid = user.getUid();
+                                                    UserProfileChangeRequest ureq = new UserProfileChangeRequest.Builder().setDisplayName("child").build();
+                                                    user.updateProfile(ureq);
                                                     cRef.child(uid);
                                                     cRef.child(uid).child("Name").setValue(Str_Name);
                                                     cRef.child(uid).child("Mobileno").setValue(Str_Mob);
